@@ -7,11 +7,14 @@ const PlayStopButton = styled.button`
   border-radius: 50%;
   cursor: pointer;
   padding: 10px;
-  width: 40px;
-  height: 40px;
+  width: 24px;
+  height: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: -24px;
+  cursor: pointer;
+  z-index: 5;
 `;
 
 const PlayIcon = () => (
@@ -26,8 +29,13 @@ const StopIcon = () => (
   </svg>
 );
 
-const Button = ({ playing, onClick }) => (
-  <PlayStopButton onClick={onClick}>
+interface ButtonProps {
+  playing: boolean;
+  onClick: (event: React.SyntheticEvent) => void;
+}
+
+const Button: React.FC<ButtonProps> = ({ playing, onClick }) => (
+  <PlayStopButton onClick={(e: React.SyntheticEvent) => onClick(e)}>
     {playing ? <StopIcon /> : <PlayIcon />}
   </PlayStopButton>
 );

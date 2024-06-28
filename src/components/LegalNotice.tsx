@@ -9,12 +9,13 @@ const LegalNoticeContainer = styled.div`
   font-size: 12px;
   color: #666;
   border-top: 1px solid #ddd;
-  max-width: 1024px;
   margin: auto;
+  background: #f5f5f7;
 `;
 
 const Notice = styled.p`
-  margin-bottom: 10px;
+  margin: 10px auto;
+  max-width: 1024px;
 `;
 
 const Asterisk = styled.span`

@@ -1,6 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 // Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperSlide, useSwiperSlide } from "swiper/react";
+
 // import required modules
 import { Pagination, Navigation } from "swiper/modules";
 // Import Swiper styles
@@ -13,19 +14,29 @@ import styled from "styled-components";
 
 import Button from "../components/Button";
 
-const Conatiner = styled.div`
+const Container = styled.div`
   width: 100%;
-  overflowx: hidden;
-  margin-bottom: 14px;
+  margin-bottom: 24px;
+  overflowx: "hidden";
 `;
 
 const StyledSwiperSlide = styled(SwiperSlide)`
   width: 65vw;
   cursor: pointer;
   position: realative;
+`;
+
+const Overlay = styled.div<{
+  isActive: boolean;
+}>`
+  width: 65vw;
+  cursor: pointer;
+  position: realative;
+
   img {
     width: 100%;
     height: 100%;
+    opacity: ${({ isActive }) => (isActive ? "1" : "0.5")};
   }
 `;
 
@@ -37,7 +48,7 @@ const Details = styled.div`
   bottom: 5%;
   left: 8%;
   display: flex;
-  jsutify-content: center;
+  justify-content: center;
   align-items: center;
   font-size: 20px;
   line-height: 1.1;
@@ -53,21 +64,22 @@ const Details = styled.div`
     height: 100%;
   }
 `;
-interface TrendingProps {
-  slides: {
-    id: number;
-    image: string;
-    buttonText: string;
-    buttonLink: string;
-    slideLink: string;
-    category: string;
-    slogan: string;
-  }[];
+interface Slide {
+  id: number;
+  image: string;
+  buttonText: string;
+  buttonLink: string;
+  slideLink: string;
+  category: string;
+  slogan: string;
+}
+interface SliderProps {
+  slides: Slide[];
 }
 
-const Slider: React.FC<TrendingProps> = (props) => {
+const Slider: React.FC<SliderProps> = (props) => {
   return (
-    <Conatiner style={{ width: "100%", overflowX: "hidden" }}>
+    <Container>
       <Swiper
         slidesPerView={2}
         spaceBetween={10}
@@ -76,28 +88,31 @@ const Slider: React.FC<TrendingProps> = (props) => {
         pagination={{
           clickable: true,
         }}
-        navigation={true}
+        // navigation={true}
         modules={[Pagination, Navigation]}
         className="mySwiper"
       >
-        {props.slides.map((item) => (
+        {props.slides.map((item: Slide) => (
           <StyledSwiperSlide key={item.id}>
-            <img src={"../../" + item.image} alt="" />
-            <Details>
-              <Button
-                size={"large"}
-                colorScheme={"default"}
-                href={item.buttonLink}
-              >
-                {item.buttonText}
-              </Button>
-              <strong>{item.category}</strong>•<span>{item.slogan}</span>
-            </Details>
+            {({ isActive }) => (
+              <Overlay isActive={isActive}>
+                <img src={"../../" + item.image} alt="" />
+                <Details>
+                  <Button
+                    size={"large"}
+                    colorScheme={"default"}
+                    href={item.buttonLink}
+                  >
+                    {item.buttonText}
+                  </Button>
+                  <strong>{item.category}</strong>•<span>{item.slogan}</span>
+                </Details>
+              </Overlay>
+            )}
           </StyledSwiperSlide>
         ))}
       </Swiper>
-    </Conatiner>
+    </Container>
   );
 };
-
 export default Slider;

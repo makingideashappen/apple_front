@@ -6,7 +6,7 @@ interface ButtonProps {
   href: string;
   size: "small" | "large";
   colorScheme: "default" | "blue-outline" | "blue";
-  onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+  onClick?: (event: React.SyntheticEvent) => void;
 }
 
 const Button = ({

@@ -8,11 +8,15 @@ const GlobalStyles = createGlobalStyle`
   
     margin-top: 48px;
   }
+    main {  display:flex;
+flex-wrap:wrap;
+    }
   section {
   display:flex;
   flex-wrap: wrap;
   width:100vw;
-
+  max-width:2560px;
+  margin:0 auto;
   }
 `;
 
