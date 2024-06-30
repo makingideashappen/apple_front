@@ -5,24 +5,13 @@ interface ButtonProps {
   children: React.ReactNode;
   href: string;
   size: "small" | "large";
-  colorScheme: "default" | "blue-outline" | "blue";
+  palette: "default" | "blue-outline" | "blue";
   onClick?: (event: React.SyntheticEvent) => void;
 }
 
-const Button = ({
-  children,
-  href,
-  size,
-  colorScheme,
-  onClick,
-}: ButtonProps) => {
+const Button = ({ children, href, size, palette, onClick }: ButtonProps) => {
   return (
-    <StyledButton
-      href={href}
-      size={size}
-      colorScheme={colorScheme}
-      onClick={onClick}
-    >
+    <StyledButton href={href} size={size} palette={palette} onClick={onClick}>
       {children}
     </StyledButton>
   );
@@ -30,7 +19,7 @@ const Button = ({
 
 const StyledButton = styled.a<{
   size: "small" | "large";
-  colorScheme: "default" | "blue-outline" | "blue";
+  palette: "default" | "blue-outline" | "blue";
 }>`
   display: inline-block;
   text-decoration: none;
@@ -50,8 +39,8 @@ const StyledButton = styled.a<{
   min-width: 30px;
   border-radius:25px;
  
-  ${({ colorScheme }) => {
-    switch (colorScheme) {
+  ${({ palette }) => {
+    switch (palette) {
       case "default":
         return css`
           background-color: #f5f5f7;

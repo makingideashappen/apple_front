@@ -6,34 +6,38 @@ import { device } from "../utils/const";
 const StyledBanerSquare = styled.div<{
   imageSm: string;
   imageMd: string;
-  isTextBottom: boolean;
+  textBottom: boolean;
   isTextLight: boolean;
 }>`
+  max-height: 500px;
   background-image: url(${({ imageSm }) => imageSm});
   background-size: cover;
   background-position: center;
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   display: inline-flex;
-  margin: 5px 7.5px;
-  padding: 2% 0;
-  max-height: 692px;
+  padding: 5% 0;
   flex-direction: column;
   align-items: center;
-  justify-content: ${({ isTextBottom }) => (isTextBottom ? "end" : "start")};
-  box-sizing: border-box;
+  justify-content: ${({ textBottom }) => (textBottom ? "end" : "start")};
   color: ${({ isTextLight }) => (isTextLight ? "#ffffff" : "#1d1d1f")};
-  margin-bottom: 10px;
+  box-sizing: border-box;
   @media ${device.laptop} {
+    max-height: 692px;
     background-image: url(${({ imageMd }) => imageMd});
-    width: calc(50% - 15px);
   }
 `;
 
 const HeroTitle = styled.h1`
-  font-size: 48px;
-  font-weight: bold;
+  font-weight: 500;
   margin-bottom: 0px;
+  margin-top: 10px;
+  font-size: 28px;
+  font-weight: 600;
+  @media ${device.laptop} {
+    font-size: 48px;
+    margin-top: auto;
+  }
 `;
 
 const HeroDescription = styled.span`
@@ -51,64 +55,75 @@ const ButtonContainer = styled.div`
     margin-left: 14px;
   }
 `;
+const Container = styled.div`
+  display: grid;
+  grid-gap: 15px;
+  grid-template-columns: 1fr;
+  width: 100%;
+  margin: 0 0 15px 0;
+  @media ${device.laptop} {
+    grid-template-columns: 1fr 1fr;
+    margin-top: auto;
+    margin: 0 15px 15px 15px;
+  }
+`;
 
 interface BanerSquareModel {
   title?: string;
   description?: string;
   buttonText?: string;
   buttonLink?: string;
-  buttonColorScheme?: "default" | "blue-outline" | "blue";
+  button?: "default" | "blue-outline" | "blue";
   buttonText2?: string;
   buttonLink2?: string;
-  buttonColorScheme2?: "default" | "blue-outline" | "blue";
-  isTextBottom?: boolean;
-  isTextLight?: boolean;
+  button2?: "default" | "blue-outline" | "blue";
+  textBottom: boolean;
+  isTextLight: boolean;
   imageMd: string;
   imageSm: string;
 }
-const BanerSquare: React.FC<BanerSquareModel> = ({
-  title,
-  description,
-  buttonText,
-  buttonLink = "/",
-  buttonColorScheme = "default",
-  buttonText2,
-  buttonLink2 = "/",
-  buttonColorScheme2 = "default",
-  isTextBottom = false,
-  isTextLight = false,
-  imageMd,
-  imageSm,
-}) => {
-  const isButton = buttonText2 && buttonLink2;
+
+interface BanerSquareProps {
+  baners: BanerSquareModel[];
+}
+
+const BanerSquare: React.FC<BanerSquareProps> = ({ baners }) => {
   return (
-    <StyledBanerSquare
-      isTextBottom={isTextBottom}
-      isTextLight={isTextLight}
-      imageSm={`../../${imageSm}`}
-      imageMd={`../../${imageMd}`}
-    >
-      <HeroTitle>{title}</HeroTitle>
-      <HeroDescription>{description}</HeroDescription>
-      <ButtonContainer>
-        <Button
-          size={"small"}
-          colorScheme={buttonColorScheme}
-          href={buttonLink}
+    <Container>
+      {baners.map((baner) => (
+        <StyledBanerSquare
+          textBottom={baner.textBottom}
+          isTextLight={baner.isTextLight}
+          imageSm={`../../${baner.imageSm}`}
+          imageMd={`../../${baner.imageMd}`}
+          key={baner.title} // add a key prop to each item
         >
-          {buttonText}
-        </Button>
-        {isButton && (
-          <Button
-            size={"small"}
-            colorScheme={buttonColorScheme2}
-            href={buttonLink2}
-          >
-            {buttonText2}
-          </Button>
-        )}
-      </ButtonContainer>
-    </StyledBanerSquare>
+          <HeroTitle>{baner.title}</HeroTitle>
+          <HeroDescription>{baner.description}</HeroDescription>
+          <ButtonContainer>
+            {baner.buttonText && baner.buttonLink && baner.button && (
+              <Button
+                size={"small"}
+                palette={baner.button}
+                href={baner.buttonLink}
+              >
+                {baner.buttonText}
+              </Button>
+            )}
+
+            {baner.buttonText2 && baner.buttonLink2 && baner.button2 && (
+              <Button
+                size={"small"}
+                palette={baner.button2}
+                href={baner.buttonLink2}
+              >
+                {baner.buttonText2}
+              </Button>
+            )}
+          </ButtonContainer>
+        </StyledBanerSquare>
+      ))}
+    </Container>
   );
 };
 

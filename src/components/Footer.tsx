@@ -1,11 +1,136 @@
 import React from "react";
 import styled from "styled-components";
+import { device } from "../utils/const";
+import MobileAccordion from "../components/MobileAccordion";
+
+const footerColumns = [
+  {
+    title: "Shop and Learn",
+    links: [
+      { text: "Mac", href: "#" },
+      { text: "iPad", href: "#" },
+      { text: "iPhone", href: "#" },
+      { text: "Watch", href: "#" },
+      { text: "TV", href: "#" },
+      { text: "Music", href: "#" },
+      { text: "Accessories", href: "#" },
+      { text: "Gift Cards", href: "#" },
+    ],
+  },
+  {
+    title: "Apple Wallet",
+    links: [
+      { text: "Wallet", href: "#" },
+      { text: "Apple Card", href: "#" },
+      { text: "Apple Pay", href: "#" },
+      { text: "Apple Cash", href: "#" },
+    ],
+  },
+  {
+    title: "Account",
+    links: [
+      { text: "Manage Your Apple ID", href: "#" },
+      { text: "Apple Store Account", href: "#" },
+      { text: "iCloud.com", href: "#" },
+    ],
+  },
+  {
+    title: "Entertainment",
+    links: [
+      { text: "Apple One", href: "#" },
+      { text: "Apple TV+", href: "#" },
+      { text: "Apple Music", href: "#" },
+      { text: "Apple Arcade", href: "#" },
+      { text: "Apple Fitness+", href: "#" },
+      { text: "Apple News+", href: "#" },
+      { text: "Apple Podcasts", href: "#" },
+      { text: "Apple Books", href: "#" },
+      { text: "App Store", href: "#" },
+    ],
+  },
+  {
+    title: "Apple Store",
+    links: [
+      { text: "Find a Store", href: "#" },
+      { text: "Genius Bar", href: "#" },
+      { text: "Today at Apple", href: "#" },
+      { text: "Apple Camp", href: "#" },
+      { text: "Apple Store App", href: "#" },
+      { text: "Refurbished and Clearance", href: "#" },
+      { text: "Financing", href: "#" },
+      { text: "Order Status", href: "#" },
+    ],
+  },
+  {
+    title: "For Business",
+    links: [
+      { text: "Apple and Business", href: "#" },
+      { text: "Shop for Business", href: "#" },
+    ],
+  },
+  {
+    title: "For Education",
+    links: [
+      { text: "Apple and Education", href: "#" },
+      { text: "Shop for Education", href: "#" },
+      { text: "College Students", href: "#" },
+    ],
+  },
+  {
+    title: "For Healthcare",
+    links: [
+      { text: "Apple in Healthcare", href: "#" },
+      { text: "Health on Apple Watch", href: "#" },
+      { text: "Health Records on iPhone", href: "#" },
+    ],
+  },
+  {
+    title: "For Government",
+    links: [
+      { text: "Shop for Government", href: "#" },
+      { text: "Shop for Veterans and Military", href: "#" },
+    ],
+  },
+  {
+    title: "Apple Values",
+    links: [
+      { text: "Accessibility", href: "#" },
+      { text: "Education", href: "#" },
+      { text: "Environment", href: "#" },
+      { text: "Inclusion and Diversity", href: "#" },
+      { text: "Privacy", href: "#" },
+      { text: "Racial Equity and Justice", href: "#" },
+      { text: "Supply Chain", href: "#" },
+    ],
+  },
+  {
+    title: "About Apple",
+    links: [
+      { text: "Newsroom", href: "#" },
+      { text: "Apple Leadership", href: "#" },
+      { text: "Career Opportunities", href: "#" },
+      { text: "Investors", href: "#" },
+      { text: "Ethics & Compliance", href: "#" },
+      { text: "Events", href: "#" },
+      { text: "Contact Apple", href: "#" },
+    ],
+  },
+];
+const AccordionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  @media ${device.laptop} {
+    display: none;
+  }
+`;
 
 const FooterContainer = styled.footer`
+  margin-top: 16px;
   background-color: #f8f8f8;
   color: #6e6e73;
   font-size: 14px;
   background-color: #f5f5f7;
+  padding: 0 22px;
   h2 {
     visibility: hidden;
     position: absolute;
@@ -19,7 +144,11 @@ const FooterLinks = styled.div`
   flex-wrap: wrap;
   margin: 20px 0;
   margin: 10px auto;
+  display: none;
   max-width: 980px;
+  @media ${device.laptop} {
+    display: flex;
+  }
 `;
 
 const FooterColumn = styled.div`
@@ -31,14 +160,10 @@ const FooterColumn = styled.div`
     font-size: 16px;
     margin-bottom: 10px;
   }
-
   ul {
     list-style: none;
     padding: 0;
-
     li {
-      margin: 5px 0;
-
       a {
         color: #6e6e73;
         text-decoration: none;
@@ -51,13 +176,25 @@ const FooterColumn = styled.div`
 `;
 
 const FooterBottom = styled.div`
-  text-align: center;
+  text-align: start;
   padding: 20px 0;
   border-top: 1px solid #e0e0e0;
   max-width: 980px;
   margin: 0 auto;
+  hr {
+    display: none;
+    @media ${device.laptop} {
+      display: flex;
+    }
+  }
+
   p {
-    display: flex;
+    display: block;
+    text-align: start;
+    font-size: 12px;
+    @media ${device.laptop} {
+      display: flex;
+    }
     margin: 5px 0;
     justify-content: start;
     a {
@@ -69,11 +206,24 @@ const FooterBottom = styled.div`
       margin-top: 5px;
       &:last-of-type {
         margin-left: auto;
+        display: none;
+        @media ${device.laptop} {
+          display: block;
+        }
       }
       a {
         color: #666;
         text-decoration: none;
       }
+    }
+  }
+  > span a {
+    text-decoration: none;
+    color: #6e6e73;
+    text-align: start;
+    font-size: 12px;
+    @media ${device.laptop} {
+      display: none;
     }
   }
 `;
@@ -88,7 +238,7 @@ const LegalNoticeContainer = styled.div`
   padding: 17px 0 11px;
   a {
     text-decoration: underline;
-    color: #0000008f;
+    color: #0066cc;
   }
   p {
     margin: 0;
@@ -198,7 +348,7 @@ const Footer = () => {
         </p>
         <p>
           Learn more about how Apple Card applications are evaluated at
-          <a href=""> support.apple.com/kb/HT209218.</a>
+          <a href="">support.apple.com/kb/HT209218.</a>
         </p>
         <p>A subscription is required for Apple TV+.</p>
         <p>
@@ -206,6 +356,12 @@ const Footer = () => {
           Music.
         </p>
       </LegalNoticeContainer>
+      <AccordionContainer>
+        <hr />
+        {footerColumns.map((column) => (
+          <MobileAccordion data={column} />
+        ))}
+      </AccordionContainer>
       <FooterLinks>
         <FooterColumn>
           <h3>Shop and Learn</h3>
@@ -426,15 +582,20 @@ const Footer = () => {
       </FooterLinks>
       <FooterBottom>
         <p>
-          More ways to shop: <a href="#">Find an Apple Store</a> or
+          More ways to shop: <a href="#"> Find an Apple Store </a> or
           <a href="#"> other retailer</a> near you. Or call 1-800-MY-APPLE.
         </p>
         <hr />
+
+        <span>
+          <a href="#">United States</a>
+        </span>
+
         <p>
           <span>Copyright © 2024 Apple Inc.</span>
           <span>
-            All rights reserved. <a href="#">Privacy Policy </a>|
-            <a href="#">Terms of Use</a> | <a href="#">Sales and Refunds </a>|
+            All rights reserved. <a href="#">Privacy Policy </a> |
+            <a href="#">Terms of Use</a> | <a href="#">Sales and Refunds </a> |
             <a href="#">Legal</a> | <a href="#">Site Map</a>
           </span>
           <span>

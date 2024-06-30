@@ -1,16 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 import Button from "./Button";
-import { device } from "../utils/const";
+import { device, size } from "../utils/const";
+import useScreenWidth from "../utils/getScreenWIdth";
 
 const StyledHeroBanner = styled.div<{
   imageSm: string;
   imageMd: string;
   imageLg: string;
-  isTextBottom: boolean;
+  textBottom: boolean;
 }>`
+  max-height: 500px;
   background-image: url(${({ imageSm }) => imageSm});
   @media ${device.laptop} {
+    max-height: 692px;
     background-image: url(${({ imageMd }) => imageMd});
   }
   @media ${device.laptopL} {
@@ -19,31 +22,39 @@ const StyledHeroBanner = styled.div<{
   background-size: cover;
   background-position: center;
   height: 100vh;
-  max-height: 692px;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: ${({ isTextBottom }) => (isTextBottom ? "end" : "start")};
+  justify-content: ${({ textBottom }) => (textBottom ? "end" : "start")};
   box-sizing: border-box;
   color: #ffffff;
   background-color: #000;
-  margin-bottom: 10px;
-  padding: 2% 0;
+  margin-bottom: 15px;
+  padding: 5% 0;
 `;
 
 const HeroTitle = styled.h1`
-  font-size: 48px;
-  font-weight: bold;
+  font-weight: 500;
   margin-bottom: 0px;
+  margin-top: 10px;
+  font-size: 28px;
+  font-weight: 600;
+  @media ${device.laptop} {
+    font-size: 48px;
+  }
 `;
 
 const HeroDescription = styled.span`
-  font-size: 24px;
-  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: 400;
   line-height: 120%;
   text-align: center;
+  margin-bottom: 20px;
   white-space: pre-line;
+  @media ${device.laptop} {
+    font-size: 24px;
+  }
 `;
 
 const ButtonContainer = styled.div`
@@ -59,11 +70,11 @@ interface HeroBannerModel {
   description?: string;
   buttonText?: string;
   buttonLink?: string;
-  buttonColorScheme?: "default" | "blue-outline" | "blue";
+  button?: "default" | "blue-outline" | "blue";
   buttonText2?: string;
   buttonLink2?: string;
-  buttonColorScheme2?: "default" | "blue-outline" | "blue";
-  isTextBottom?: boolean;
+  button2?: "default" | "blue-outline" | "blue";
+  textBottom: boolean;
   imageLg: string;
   imageMd: string;
   imageSm: string;
@@ -73,19 +84,21 @@ const HeroBanner: React.FC<HeroBannerModel> = ({
   description,
   buttonText,
   buttonLink = "/",
-  buttonColorScheme = "default",
+  button = "default",
   buttonText2,
   buttonLink2 = "/",
-  buttonColorScheme2 = "default",
-  isTextBottom = false,
+  button2 = "default",
+  textBottom,
   imageLg,
   imageMd,
   imageSm,
 }) => {
   const isButton = buttonText2 && buttonLink2;
+  const width = useScreenWidth();
+  const buttonSize = width < size.laptop ? "small" : "large";
   return (
     <StyledHeroBanner
-      isTextBottom={isTextBottom}
+      textBottom={textBottom}
       imageSm={`../../${imageSm}`}
       imageMd={`../../${imageMd}`}
       imageLg={`../../${imageLg}`}
@@ -93,19 +106,11 @@ const HeroBanner: React.FC<HeroBannerModel> = ({
       <HeroTitle>{title}</HeroTitle>
       <HeroDescription>{description}</HeroDescription>
       <ButtonContainer>
-        <Button
-          size={"large"}
-          colorScheme={buttonColorScheme}
-          href={buttonLink}
-        >
+        <Button size={buttonSize} palette={button} href={buttonLink}>
           {buttonText}
         </Button>
         {isButton && (
-          <Button
-            size={"large"}
-            colorScheme={buttonColorScheme2}
-            href={buttonLink2}
-          >
+          <Button size={buttonSize} palette={button2} href={buttonLink2}>
             {buttonText2}
           </Button>
         )}

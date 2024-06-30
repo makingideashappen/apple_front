@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { device } from "../utils/const";
+import MobileMenu from "./MobileMenu";
 
 interface NavLinkProps {
   link: {
@@ -10,45 +12,71 @@ interface NavLinkProps {
 
 const Nav = styled.nav`
   position: fixed;
+  top: 0;
+  left: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: rgba(29, 29, 31, 0.8);
   backdrop-filter: blur(10px);
-  height: 44px;
-  width: 100vw;
+  height: 48px;
+  width: 100%;
   z-index: 10;
-  svg {
+  li svg {
     fill: #d1d1d1;
     cursor: pointer;
+    transform: scale(120%);
+    padding: 5px 2px 0 0;
   }
-  svg:hover {
+  li svg:hover {
     fill: #d4d4d4;
+  }
+  @media ${device.laptop} {
+    height: 44px;
+    li svg {
+      transform: initial;
+    }
   }
 `;
 
 const NavLinks = styled.ul`
-  min-width: 1024px;
+  width: 1024px;
   list-style: none;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding: 0;
+  li {
+    padding: 0 16px;
+    &:first-of-type {
+      margin-right: auto;
+    }
+  }
+
+  @media ${device.laptop} {
+    justify-content: space-between;
+    svg {
+      display: flex;
+    }
+  }
 `;
 
 const NavLink = styled.li`
-  cursor: pointer;
-  font-size: 12px;
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  line-height: 100%;
-  height: 100%;
-  padding: 8px 0;
-  a {
-    color: #d1d1d1;
-    text-decoration: none;
-    &:hover {
-      color: #d9d9d9;
+  display: none;
+  @media ${device.laptop} {
+    display: block;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 100%;
+    height: 100%;
+    padding: 8px 0;
+    a {
+      color: #d1d1d1;
+      text-decoration: none;
+      &:hover {
+        color: #d9d9d9;
+      }
     }
   }
 `;
@@ -94,7 +122,7 @@ const NavLinkComponent: React.FC<NavLinkProps> = (props) => {
   );
 };
 
-const NavItems = [
+const Links = [
   {
     link: {
       text: "Store",
@@ -167,12 +195,21 @@ const Header: React.FC = () => {
   return (
     <Nav>
       <NavLinks>
-        <LogoSvg />
-        {NavItems.map((link, x) => (
+        <li>
+          <LogoSvg />
+        </li>
+        {Links.map((link, x) => (
           <NavLinkComponent {...link} key={`${x}-nav-tem`} />
         ))}
-        <LookupSvg />
-        <CartSvg />
+        <li>
+          <LookupSvg />
+        </li>
+        <li>
+          <CartSvg />
+        </li>
+        <li>
+          <MobileMenu links={Links} />
+        </li>
       </NavLinks>
     </Nav>
   );

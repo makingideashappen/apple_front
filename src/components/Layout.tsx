@@ -1,7 +1,6 @@
 // Layout.tsx
 import React from "react";
 import styled from "styled-components";
-import GlobalStyles from "./GlobalStyles";
 import Header from "./Header";
 import Footer from "./Footer";
 
@@ -18,7 +17,6 @@ const Layout: React.FC<Props> = ({ children }) => {
   return (
     <Container>
       <Header />
-      <GlobalStyles />
       <main>{children}</main>
       <Footer />
     </Container>

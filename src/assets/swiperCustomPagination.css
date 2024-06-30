@@ -205,3 +205,46 @@ button.swiper-pagination-bullet {
 .swiper-pagination-lock {
   display: none;
 }
+
+/*   Custom click on next or prev feature */
+.swiper-button-next,
+.swiper-rtl .swiper-button-prev {
+  right: var(--swiper-navigation-sides-offset, 10px);
+  right: 0;
+  top: 0;
+  height: calc(100% - 20px);
+  width: calc(25vw - 10px);
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  right: var(--swiper-navigation-sides-offset, 10px);
+  right: 0;
+  top: 0;
+  height: calc(100% - 20px);
+  width: calc(25vw - 10px);
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  color: rgba(0, 0, 0, 0.56);
+  content: "";
+  width: 16px;
+  height: 16px;
+  border-left: 3px solid rgba(0, 0, 0, 0.56);
+  border-bottom: 3px solid rgba(0, 0, 0, 0.56);
+}
+.swiper-button-next:after {
+  transform: rotate(220deg);
+}
+
+.swiper-button-prev:after {
+  transform: rotate(45deg);
+}
+
+@media (min-width: 834px) {
+  .swiper-button-next:after,
+  .swiper-button-prev:after {
+    opacity: 0;
+  }
+}
