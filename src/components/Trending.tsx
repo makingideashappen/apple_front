@@ -1,15 +1,12 @@
-import React, { useState, createRef, RefObject } from "react";
-// Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
+import React, { useState } from "react";
+
 import ButtonPlay from "./ButtonPlay";
-// Import Swiper styles
-import "../assets/swiperTrend.css";
+
 import styled, { keyframes } from "styled-components";
-// import required modules
-import { Autoplay } from "swiper/modules";
 import Button from "./Button";
 import { size, device } from "../utils/const";
 import useScreenWidth from "../utils/getScreenWIdth";
+import Marquee from "react-fast-marquee";
 
 const slideUp = keyframes`
   0% {
@@ -23,34 +20,30 @@ const slideUp = keyframes`
 const Container = styled.div`
   overflow: hidden;
 `;
-const Inner = styled.div``;
+
+const Slide = styled.div`
+  position: relative;
+  margin: 0 5px;
+  @media ${device.laptopL} {
+    margin: 0 5px;
+  }
+`;
+
 const Row = styled.div`
-  max-width: 100vw;
+  max-width: calc(100vw - 60px);
   display: flex;
   justify-content: end;
   align-items: center;
   margin: 0 30px;
 `;
-const StyledSwiperSlide = styled(SwiperSlide)`
-  cursor: pointer;
-
-  width: 238px;
-  @media ${device.laptop} {
-    min-width: 330px;
-  }
-`;
-
-const StyledSwiper = styled(Swiper)`
-  min-width: 1200px;
-`;
 
 const Details = styled.div`
   opacity: 0;
-  height: 100%;
+  height: calc(100% - 5px);
   cursor: pointer;
   position: absolute;
-  bottom: 0;
-  left: -5px;
+  top: -2px;
+  left: 0px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -68,7 +61,7 @@ const Details = styled.div`
     }
   }
   @media ${device.laptopL} {
-    width: calc(100% + 10px);
+    width: 100%;
   }
 `;
 
@@ -86,70 +79,40 @@ interface TrendingProps {
 
 const Trending: React.FC<TrendingProps> = (props) => {
   const [playing, setPlaying] = useState(false);
-  const swiperRef: RefObject<typeof Swiper> = createRef(); // RefObject<Swiper>
+  const [speed, setSpeed] = useState(50);
   const width = useScreenWidth();
-
   const isSmallScreen = width < size.laptop;
 
   const handleClick = () => {
     setPlaying(!playing);
-    if (swiperRef.current) {
-      swiperRef.current.swiper.autoplay.stop();
-    }
   };
 
+  // TO DO : FIX not smooth
+  // const handleMouseOver = () => {
+  //   setSpeed(49);
+  // };
+
+  // const handleMouseOut = () => {
+  //   setSpeed(50);
+  // };
   return (
     <Container>
-      <Inner>
-        <StyledSwiper
-          ref={swiperRef}
-          spaceBetween={20}
-          centeredSlides={true}
-          autoplay={{
-            delay: 0,
-            disableOnInteraction: true,
-          }}
-          pagination={{
-            clickable: true,
-          }}
-          loop={true}
-          speed={20000}
-          modules={[Autoplay]}
-          freeMode={true}
-          className="mySwiper"
-          allowTouchMove={false} // Disable touch move
-          breakpoints={{
-            1024: {
-              slidesPerView: 3,
-              spaceBetween: 20,
-            },
-            2160: {
-              slidesPerView: 6,
-              spaceBetween: 20,
-            },
-          }}
-        >
-          {props.slides.map((item: Slide) => (
-            <StyledSwiperSlide key={item.id}>
-              {/* TO DO: check medium photo */}
-              {isSmallScreen ? (
-                <img src={"../../" + item.imageSm} alt="" />
-              ) : (
-                <img src={"../../" + item.imageMd} alt="" />
-              )}
-              <Details>
-                <Button
-                  size={"small"}
-                  palette={"default"}
-                  href={item.buttonLink}
-                >
-                  {item.buttonText}
-                </Button>
-              </Details>
-            </StyledSwiperSlide>
-          ))}
-        </StyledSwiper>
-      </Inner>
+      <Marquee play={playing} speed={speed}>
+        {props.slides.map((item: Slide) => (
+          <Slide key={item.id}>
+            {isSmallScreen ? (
+              <img src={"../../" + item.imageSm} alt="" />
+            ) : (
+              <img src={"../../" + item.imageMd} alt="" />
+            )}
+            <Details>
+              <Button size={"small"} palette={"default"} href={item.buttonLink}>
+                {item.buttonText}
+              </Button>
+            </Details>
+          </Slide>
+        ))}
+      </Marquee>
       <Row>
         <ButtonPlay playing={playing} onClick={() => handleClick()} />
       </Row>

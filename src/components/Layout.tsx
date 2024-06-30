@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import Header from "./Header";
 import Footer from "./Footer";
+import Animation from "./Animation";
 
 interface Props {
   children: React.ReactNode;
@@ -17,8 +18,10 @@ const Layout: React.FC<Props> = ({ children }) => {
   return (
     <Container>
       <Header />
-      <main>{children}</main>
-      <Footer />
+      <Animation>
+        <main>{children}</main>
+        <Footer />
+      </Animation>
     </Container>
   );
 };

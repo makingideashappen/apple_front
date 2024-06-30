@@ -13,10 +13,8 @@ const PlayStopButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: -18px;
   cursor: pointer;
   z-index: 5;
-  margin-bottom: 20px;
   svg g path {
     width: 8px;
     height: 8px;

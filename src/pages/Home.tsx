@@ -7,6 +7,7 @@ import Hero from "../components/Hero";
 import BanerSquare from "../components/BanerSquare";
 import Slider from "../components/Slider";
 import Trending from "../components/Trending";
+import Animation from "../components/Animation";
 
 interface Props {
   title: string;
@@ -17,6 +18,7 @@ const Page: React.FC<Props> = () => {
   //TO DO: ADD SEO COMPONENT
   return (
     <Layout>
+      <Animation />
       <section>
         <Hero
           title="IPhone"
@@ -88,7 +90,7 @@ const Page: React.FC<Props> = () => {
               buttonText2: "Buy",
               buttonLink2: "/",
               button2: "blue-outline",
-              isTextLight: true,
+              isTextLight: false,
               textBottom: true,
               imageMd:
                 "[www.apple.com][42]promo_apple_vision_pro__f4v4zp0sum2y_large_2x.jpg",

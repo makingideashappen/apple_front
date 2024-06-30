@@ -33,7 +33,6 @@ const StyledSwiperSlide = styled(SwiperSlide)`
 const Overlay = styled.div<{
   isActive: boolean;
 }>`
-  width: 65vw;
   cursor: pointer;
   position: realative;
   img {
