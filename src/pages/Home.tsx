@@ -18,7 +18,6 @@ const Page: React.FC<Props> = () => {
   //TO DO: ADD SEO COMPONENT
   return (
     <Layout>
-      <Animation />
       <section>
         <Hero
           title="IPhone"

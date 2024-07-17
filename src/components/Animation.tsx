@@ -1,4 +1,4 @@
-import React from "eact";
+import React from "react";
 import styled, { keyframes } from "styled-components";
 import Cat from "../../public/vecteezy_cat-png-generative-ai_24597794.png";
 
@@ -33,8 +33,10 @@ const AnimatedImage = styled.img`
 const AnimatedDiv = styled.div`
   animation: ${fadeIn} 2s ease-in-out;
 `;
-
-const App = ({ children }) => {
+interface AniamtionProps {
+  children: React.ReactNode;
+}
+const Aniamtion = ({ children }: AniamtionProps) => {
   return (
     <AnimatedDiv>
       <AnimatedImage src={Cat} alt="Rotating Image" />
@@ -43,4 +45,4 @@ const App = ({ children }) => {
   );
 };
 
-export default App;
+export default Aniamtion;
